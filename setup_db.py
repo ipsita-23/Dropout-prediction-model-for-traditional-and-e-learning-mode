@@ -7,21 +7,21 @@ from utils.auth import create_user
 import sys
 
 def setup():
-    print("🔄 Initializing database...")
+    print("Initializing database...")
     try:
         init_db()
-        print("✅ Database tables created.")
+        print("Database tables created.")
     except Exception as e:
-        print(f"❌ Error creating tables: {e}")
+        print(f"Error creating tables: {e}")
         sys.exit(1)
 
-    print("👤 Creating default admin user...")
+    print("Creating default admin user...")
     if create_user("Admin", "Admin@123", "admin"):
-        print("✅ Admin user created (Admin / Admin@123)")
+        print("Admin user created (Admin / Admin@123)")
     else:
-        print("ℹ️ Admin user already exists or error occurred.")
+        print("Admin user already exists or error occurred.")
 
-    print("\n🎉 Setup complete! You can now run the app:")
+    print("\nSetup complete! You can now run the app:")
     print("streamlit run app.py")
 
 if __name__ == "__main__":
