@@ -12,10 +12,32 @@ from typing import Dict, Any, Tuple, List
 @st.cache_resource
 def load_model():
     """Load the trained dropout prediction model."""
-    # Load the main model
+    # Try loading from root directory first
     model_path = Path(__file__).parent.parent / "dropout_model.pkl"
     if model_path.exists():
-        return joblib.load(model_path)
+        loaded = joblib.load(model_path)
+        # Handle case where model is saved as a dictionary
+        if isinstance(loaded, dict):
+            if 'model' in loaded:
+                return loaded['model']
+            else:
+                st.error("Model dictionary missing 'model' key")
+                return None
+        return loaded
+    
+    # Try loading from models directory
+    model_path = Path(__file__).parent.parent / "models" / "dropout_model.pkl"
+    if model_path.exists():
+        loaded = joblib.load(model_path)
+        # Handle case where model is saved as a dictionary
+        if isinstance(loaded, dict):
+            if 'model' in loaded:
+                return loaded['model']
+            else:
+                st.error("Model dictionary missing 'model' key")
+                return None
+        return loaded
+    
     return None
 
 
